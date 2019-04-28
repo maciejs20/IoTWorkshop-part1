@@ -1,0 +1,46 @@
+function round(num) {
+    return +(Math.round(num + "e+2")  + "e-2");
+}
+
+var oldTemp = context.get('temp')||20;
+var oldHumi = context.get('humi')||50;
+var doorA = flow.get('doorA')||0;
+var doorB = flow.get('doorB')||0;
+var doorC = flow.get('doorC')||0;
+
+var currDate = new Date();
+var myTime=currDate.getTime();
+
+var currTemp=round(Math.random()+oldTemp-0.5);
+var currHumi=round(Math.random()+oldHumi-0.5);
+
+
+if (currHumi>90) currHumi=90;
+if (currHumi<10) currHumi=10;
+if (currTemp>30) currTemp=30;
+if (currTemp<15) currTemp=15;
+
+context.set('temp', currTemp);
+context.set('humi', currHumi);
+var status1={"d":
+    {
+    "timestamp" : myTime,
+                "temp" : currTemp,
+ 	            "humi" : currHumi,
+ 	            "doorA": doorA,
+ 	            "doorB": doorB,
+ 	            "doorC": doorC
+    }
+  };
+  var status={
+    "timestamp" : myTime,
+                "temp" : currTemp,
+ 	            "humi" : currHumi,
+ 	            "doorA": doorA,
+ 	            "doorB": doorB,
+ 	            "doorC": doorC
+    };
+
+
+msg.payload={"d": status};
+return msg;
